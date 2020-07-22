@@ -1,0 +1,40 @@
+<mat-expansion-panel hideToggle #matExpansionPanel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Add new task
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <mat-form-field appearance="legacy">
+    <mat-label *ngIf="!formError">Title</mat-label>
+    <mat-label *ngIf="formError">Please name Your task!</mat-label>
+    <input matInput type="text" [(ngModel)]="newTask.name" />
+  </mat-form-field>
+  <br />
+  <mat-form-field appearance="legacy">
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="newTask.date" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <br />
+  <mat-form-field appearance="legacy">
+    <mat-label>Additional informations</mat-label>
+    <input matInput type="text" [(ngModel)]="newTask.comment" />
+  </mat-form-field>
+  <div class="button-container">
+    <button
+      mat-icon-button
+      aria-label="Add task button"
+      (click)="addTask();"
+    >
+      <mat-icon>check</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="Cancel task button"
+      (click)="clearForm()"
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</mat-expansion-panel>

@@ -1,0 +1,21 @@
+<app-summary></app-summary>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let task of tasks">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ task.name }}</mat-panel-title>
+    </mat-expansion-panel-header>
+      <mat-form-field appearance="legacy">
+        <mat-label>Deadline:</mat-label>
+        <input matInput disabled value={{formatDate(task)}} />
+      </mat-form-field>
+      <mat-form-field *ngIf="task.comment" appearance="legacy">
+        <mat-label>Additional information:</mat-label>
+        <input matInput disabled value={{task.comment}} />
+      </mat-form-field>
+      <div class="button-container">
+        <button mat-icon-button aria-label="Finish task button" (click)="setTaskState(task, 'active')">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+  </mat-expansion-panel>
+</mat-accordion>

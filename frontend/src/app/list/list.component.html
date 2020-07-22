@@ -1,0 +1,101 @@
+<app-summary></app-summary>
+<app-add-task (taskAdded)='onNewTask($event)'></app-add-task>
+<br />
+<mat-accordion>
+  <mat-expansion-panel
+    *ngFor="let task of tasks"
+    [expanded]="task === editedTask"
+  >
+    <mat-expansion-panel-header
+      *ngIf="task !== editedTask; else editWindowheader"
+    >
+      <mat-panel-title>{{ task.name }}</mat-panel-title>
+      <mat-panel-description>
+        <button
+          mat-icon-button
+          aria-label="Delete task button"
+          (click)="deleteTask(task._id)"
+        >
+          <mat-icon>clear</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          aria-label="Cancel task button"
+          (click)="setTaskState(task, 'canceled')"
+        >
+          <mat-icon>horizontal_rule</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          aria-label="Finish task button"
+          (click)="setTaskState(task, 'finished')"
+        >
+          <mat-icon>check</mat-icon>
+        </button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-template #editWindowheader>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ task.name }}</mat-panel-title>
+      </mat-expansion-panel-header>
+    </ng-template>
+    <div *ngIf="task !== editedTask; else editWindowBody">
+      <mat-form-field appearance="legacy">
+        <mat-label>Deadline:</mat-label>
+        <input matInput disabled value="{{ formatDate(task) }}" />
+      </mat-form-field>
+      <mat-form-field *ngIf="task.comment" appearance="legacy">
+        <mat-label>Additional information:</mat-label>
+        <input matInput disabled value="{{ task.comment }}" />
+      </mat-form-field>
+      <div class="button-container">
+        <button
+          mat-icon-button
+          aria-label="Edit task button"
+          (click)="editTask(task)"
+        >
+          <mat-icon style="font-size: 18px;">edit</mat-icon>
+        </button>
+      </div>
+    </div>
+    <ng-template #editWindowBody>
+      <form [formGroup]="taskEditForm" (ngSubmit)="saveTaskEdit()">
+        <mat-form-field appearance="legacy">
+          <mat-label *ngIf="!formError">Title</mat-label>
+          <mat-label *ngIf="formError">Please name Your task!</mat-label>
+          <input matInput type="text" formControlName="name" />
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+          <mat-label>Additional informations</mat-label>
+          <input matInput type="text" formControlName="comment" />
+        </mat-form-field>
+        <div class="button-container">
+          <button
+            type="submit"
+            [disabled]="!taskEditForm.valid"
+            mat-icon-button
+            aria-label="Add task button"
+          >
+            <mat-icon>check</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            aria-label="Cancel task button"
+            (click)="cancelTaskEdit()"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </form>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>
