@@ -78,7 +78,7 @@ export class ListComponent implements OnInit {
   }
 
   public onNewTask(task: Task): void {
-    this.tasks.push(task);
+    this.getTasks();
     this.summary.getSummary();
   }
 }
