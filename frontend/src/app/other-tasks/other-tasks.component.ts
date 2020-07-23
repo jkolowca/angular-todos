@@ -4,11 +4,11 @@ import { TasksService } from '../tasks.service';
 import { SummaryComponent } from '../summary/summary.component';
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.sass'],
+  selector: 'app-other-tasks',
+  templateUrl: './other-tasks.component.html',
+  styleUrls: ['./other-tasks.component.sass']
 })
-export class HistoryComponent implements OnInit {
+export class OtherTasksComponent implements OnInit {
   tasks: Task[];
   @Input() type: string;
   @ViewChild( SummaryComponent ) summary: SummaryComponent;

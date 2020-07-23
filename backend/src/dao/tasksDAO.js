@@ -77,8 +77,6 @@ class TasksDAO {
 
   static async addTask( name, date, comment, taskState) {
     try {
-      // TODO Ticket: Create/Update Comments
-      // Construct the comment document to be inserted into MongoDB.
       const taskDoc = { name, date, comment, taskState };
 
       return await tasks.insertOne(taskDoc);
@@ -90,9 +88,6 @@ class TasksDAO {
 
   static async updateTask(taskId, name, date, comment, taskState) {
     try {
-      // TODO Ticket: Create/Update Comments
-      // Use the commentId and userEmail to select the proper comment, then
-      // update the "text" and "date" fields of the selected comment.
       const updateResponse = await tasks.updateOne(
         { _id: taskId },
         { $set: { name, date, comment, taskState } }
@@ -106,18 +101,8 @@ class TasksDAO {
   }
 
   static async deleteTask(taskId) {
-    /**
-  Ticket: Delete Comments
-
-  Implement the deleteOne() call in this method.
-
-  Ensure the delete operation is limited so only the user can delete their own
-  comments, but not anyone else's comments.
-  */
 
     try {
-      // TODO Ticket: Delete Comments
-      // Use the userEmail and commentId to delete the proper comment.
       const deleteResponse = await tasks.deleteOne({
         _id: taskId,
       });
@@ -138,13 +123,6 @@ class TasksDAO {
  * @property {Date} date
  * @property {string} comment
  * @property {string} taskState
- */
-
-/**
- * Result set for getTasks method
- * @typedef GetTasksResult
- * @property {Task[]} tasksList
- * @property {number} totalNumResults
  */
 
 module.exports = TasksDAO;

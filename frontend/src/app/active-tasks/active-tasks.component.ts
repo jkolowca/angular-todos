@@ -4,13 +4,12 @@ import { TasksService } from '../tasks.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SummaryComponent } from '../summary/summary.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
-
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.sass'],
+  selector: 'app-active-tasks',
+  templateUrl: './active-tasks.component.html',
+  styleUrls: ['./active-tasks.component.sass']
 })
-export class ListComponent implements OnInit {
+export class ActiveTasksComponent implements OnInit {
   @ViewChild(SummaryComponent) summary: SummaryComponent;
   @ViewChild(AddTaskComponent) addTaskForm: AddTaskComponent;
   tasks: Task[];
