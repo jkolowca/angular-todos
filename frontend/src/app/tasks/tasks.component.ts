@@ -20,7 +20,7 @@ export class TasksComponent implements OnInit {
   ngOnInit(): void {
     const listId = this.route.snapshot.paramMap.get('id');
     this.listService.getList(listId).subscribe((l) => {
-      if(!l){
+      if (!l) {
         this.router.navigateByUrl('/');
       }
       this.list = l;

@@ -4,6 +4,7 @@ import { TasksService } from '../tasks.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SummaryComponent } from '../summary/summary.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-active-tasks',
@@ -13,7 +14,6 @@ import { AddTaskComponent } from '../add-task/add-task.component';
 export class ActiveTasksComponent implements OnInit {
   @ViewChild(SummaryComponent) summary: SummaryComponent;
   @ViewChild(AddTaskComponent) addTaskForm: AddTaskComponent;
-  @Input() listId: string;
   tasks: Task[];
   editedTask: Task;
   formError = false;
@@ -22,7 +22,11 @@ export class ActiveTasksComponent implements OnInit {
     date: new FormControl(''),
     comment: new FormControl(''),
   });
-  constructor(private taskService: TasksService) {}
+  listId: string;
+  constructor(
+    private taskService: TasksService,
+    private route: ActivatedRoute
+  ) {}
 
   public getTasks(): void {
     this.taskService.getTasks('active', this.listId).subscribe((newTasks) => {
@@ -41,6 +45,7 @@ export class ActiveTasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.listId = this.route.snapshot.paramMap.get('id');
     this.getTasks();
   }
 
