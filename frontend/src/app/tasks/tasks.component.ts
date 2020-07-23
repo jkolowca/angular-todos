@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+liimport { Router, ActivatedRoute } from '@angular/router';
 import { ListsService } from '../lists.service';
 import { List } from '../list';
 
@@ -11,17 +11,19 @@ import { List } from '../list';
 export class TasksComponent implements OnInit {
   title = 'to-do';
   date = new Date();
-  list: List = { _id: '', name: '' };
+  list: List = { _id: 'a', name: '' };
   constructor(
     private listService: ListsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   ngOnInit(): void {
     const listId = this.route.snapshot.paramMap.get('id');
     this.listService.getList(listId).subscribe((l) => {
-      if (l) {
-        this.list = l;
+      if(!l){
+        this.router.navigateByUrl('/');
       }
+      this.list = l;
     });
   }
 }

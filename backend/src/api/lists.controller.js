@@ -10,8 +10,12 @@ class ListsController {
 
   static async apiGetList(req, res, next) {
     let id = req.params.id || {};
-    const list = await ListsDAO.getList(ObjectId(id));
-    res.json(list);
+    try {
+      const list = await ListsDAO.getList(ObjectId(id));
+      res.json(list);
+    } catch (e) {
+      res.status(500).json({e});
+    }
   }
 
   static async apiAddList(req, res, next) {
