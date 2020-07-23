@@ -51,6 +51,12 @@ export class TasksService {
       .pipe(catchError(this.handleError<Task>('editTask')));
   }
 
+  getTasksCount(type: string): Observable<any> {
+    return this.http
+      .get<Task[]>(`${this.tasksUrl}count/${type}`)
+      .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
+  }
+
   private handleError<T>(
     operation = 'operation',
     result?: T

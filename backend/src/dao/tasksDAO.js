@@ -56,6 +56,15 @@ class TasksDAO {
     }
   }
 
+  static async getTasksCount(state) {
+    try {
+      return await tasks.countDocuments({taskState: state});
+    } catch (e) {
+      console.error(`Unable to issue find command, ${e}`);
+      return 0;
+    }
+  }
+
   static async getTaskByID(id) {
     try {
       console.log(id);

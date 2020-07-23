@@ -3,8 +3,8 @@ const ObjectId = require("mongodb").ObjectId;
 
 class TasksController {
   static async apiGetTasks(req, res, next) {
-    const {tasksList} = await TasksDAO.getTasks();
-    res.json( tasksList );
+    const { tasksList } = await TasksDAO.getTasks();
+    res.json(tasksList);
   }
 
   static async apiAddTask(req, res, next) {
@@ -23,10 +23,16 @@ class TasksController {
 
   static async apiGetTasksByState(req, res, next) {
     let state = req.params.state || {};
-    const {tasksList} = await TasksDAO.getTasksByState(state);
-    res.json( tasksList );
+    const { tasksList } = await TasksDAO.getTasksByState(state);
+    res.json(tasksList);
   }
 
+  static async apiGetTasksCount(req, res, next) {
+    let state = req.params.state || {};
+    const count = await TasksDAO.getTasksCount(state);
+    res.json(count);
+  }
+  
   static async apiGetTaskById(req, res, next) {
     try {
       let id = req.params.id || {};
@@ -62,9 +68,7 @@ class TasksController {
       }
 
       if (taskResponse.modifiedCount === 0) {
-        throw new Error(
-          "unable to update task"
-        );
+        throw new Error("unable to update task");
       }
 
       const tasks = await TasksDAO.getTasks();
@@ -80,8 +84,8 @@ class TasksController {
       let id = req.params.id || {};
       await TasksDAO.deleteTask(ObjectId(id));
 
-      const  tasks  = await TasksDAO.getTasks();
-      res.json( tasks );
+      const tasks = await TasksDAO.getTasks();
+      res.json(tasks);
     } catch (e) {
       res.status(500).json({ e });
     }

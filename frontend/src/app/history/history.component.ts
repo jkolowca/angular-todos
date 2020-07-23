@@ -33,4 +33,10 @@ export class HistoryComponent implements OnInit {
     this.tasks = this.tasks.filter(t => t !== task);
     this.summary.getSummary();
   }
+
+  public deleteTask(id: string): void {
+    this.taskService.deleteTask(id).subscribe();
+    this.tasks = this.tasks.filter((t) => t._id !== id);
+    this.summary.getSummary();
+  }
 }

@@ -9,25 +9,27 @@ import { Task } from '../task';
 })
 export class SummaryComponent implements OnInit {
   finishedRatio: number;
-
   constructor(private taskService: TasksService) {}
+  finished: number;
+  active: number;
 
   ngOnInit(): void {
     this.getSummary();
   }
 
   public getSummary(): void {
-    this.taskService.getTasks().subscribe((t) => this.calculateSummary(t));
+    this.taskService
+      .getTasksCount('finished')
+      .subscribe((c) => (this.finished = c));
+    this.taskService.getTasksCount('active').subscribe((c) => {
+      this.active = c;
+      this.calculateSummary();
+    });
   }
 
-  calculateSummary(tasks: Task[]): void {
-    const all = tasks.length;
-    let finished = 0;
-    tasks.forEach((t) => {
-      if (t.task_state === 'finished') {
-        finished++;
-      }
-    });
-    this.finishedRatio = Math.floor((finished / all) * 100);
+  calculateSummary(): void {
+    this.finishedRatio = Math.floor(
+      (this.finished / (this.finished + this.active)) * 100
+    );
   }
 }

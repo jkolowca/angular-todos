@@ -11,6 +11,9 @@ router
   .route("/:state")
   .get(TasksCtrl.apiGetTasksByState)
 router
+  .route("/count/:state")
+  .get(TasksCtrl.apiGetTasksCount)
+router
   .route("/task/:id")
   .get(TasksCtrl.apiGetTaskById)
   .put(TasksCtrl.apiUpdateTask)
