@@ -1,6 +1,6 @@
 <app-summary></app-summary>
 <mat-accordion>
-  <mat-expansion-panel *ngFor="let task of tasks">
+  <mat-expansion-panel hideToggle *ngFor="let task of tasks">
     <mat-expansion-panel-header>
       <mat-panel-title>{{ task.name }}</mat-panel-title>
     <mat-panel-description>

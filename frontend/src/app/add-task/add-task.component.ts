@@ -9,6 +9,7 @@ import { MatExpansionPanel } from '@angular/material/expansion';
 import { TasksService } from '../tasks.service';
 import { Task } from '../task';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
@@ -25,7 +26,11 @@ export class AddTaskComponent implements OnInit {
     date: new FormControl(new Date()),
     comment: new FormControl(''),
   });
-  constructor(private taskService: TasksService) {}
+  listId: string;
+  constructor(
+    private taskService: TasksService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {}
 
@@ -36,8 +41,10 @@ export class AddTaskComponent implements OnInit {
     } else {
       this.formError = false;
     }
+    this.listId = this.route.snapshot.paramMap.get('id');
     this.taskService
       .addTask(
+        this.listId,
         this.newTaskForm.controls.name.value,
         this.newTaskForm.controls.date.value,
         this.newTaskForm.controls.comment.value
@@ -47,7 +54,6 @@ export class AddTaskComponent implements OnInit {
   }
 
   clearForm(): void {
-    this.newTaskForm.reset();
     this.newTaskForm.setValue({ name: '', date: new Date(), comment: '' });
     this.matExpansionPanelElement.close();
   }

@@ -14,22 +14,22 @@ export class TasksService {
   };
   constructor(private http: HttpClient) {}
 
-  getTasks(type?: string): Observable<Task[]> {
-     if (!type) {
+  getTasks(type: string, listId: string): Observable<Task[]> {
+     if (!listId) {
       return this.http
-        .get<Task[]>(this.tasksUrl, this.httpOptions)
-        .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
+       .get<Task[]>(`${this.tasksUrl}${type}`)
+       .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
      }
      return this.http
-      .get<Task[]>(`${this.tasksUrl}${type}`)
+      .get<Task[]>(`${this.tasksUrl}${type}/${listId}`)
       .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
   }
 
-  addTask(name: string, date: Date, comment: string): Observable<any> {
+  addTask(listId: string, name: string, date: Date, comment: string): Observable<any> {
     return this.http
       .post<Task>(
         this.tasksUrl,
-        { name, date, comment, task_state: 'active' },
+        { listId, name, date, comment, task_state: 'active' },
         this.httpOptions
       )
       .pipe(
@@ -51,9 +51,9 @@ export class TasksService {
       .pipe(catchError(this.handleError<Task>('editTask')));
   }
 
-  getTasksCount(type: string): Observable<any> {
+  getTasksCount(type: string, listId: string): Observable<any> {
     return this.http
-      .get<Task[]>(`${this.tasksUrl}count/${type}`)
+      .get<Task[]>(`${this.tasksUrl}count/${type}/${listId}`)
       .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
   }
 

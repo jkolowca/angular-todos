@@ -9,9 +9,9 @@ class TasksController {
 
   static async apiAddTask(req, res, next) {
     try {
-      const { name, date, comment, task_state } = req.body;
+      const { listId, name, date, comment, task_state } = req.body;
 
-      await TasksDAO.addTask(name, date, comment, task_state);
+      await TasksDAO.addTask( ObjectId(listId), name, date, comment, task_state);
 
       const updatedTasks = await TasksDAO.getTasks();
 
@@ -21,15 +21,23 @@ class TasksController {
     }
   }
 
+  static async apiGetListTasksByState(req, res, next) {
+    let state = req.params.state || {};
+    let listId = req.params.id || {};
+    const { tasksList } = await TasksDAO.getListTasksByState(state, ObjectId(listId));
+    res.json(tasksList);
+  }
+
   static async apiGetTasksByState(req, res, next) {
     let state = req.params.state || {};
     const { tasksList } = await TasksDAO.getTasksByState(state);
     res.json(tasksList);
   }
 
-  static async apiGetTasksCount(req, res, next) {
+  static async apiGetListTasksCount(req, res, next) {
     let state = req.params.state || {};
-    const count = await TasksDAO.getTasksCount(state);
+    let listId = req.params.id || {};
+    const count = await TasksDAO.getListTasksCount(state, ObjectId(listId));
     res.json(count);
   }
   

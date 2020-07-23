@@ -1,4 +1,5 @@
 const ListsDAO = require("../dao/listsDAO");
+const TasksDAO = require("../dao/tasksDAO");
 const ObjectId = require("mongodb").ObjectId;
 
 class ListsController {
@@ -25,7 +26,7 @@ class ListsController {
     try {
       let id = req.params.id || {};
       await ListsDAO.deleteList(ObjectId(id));
-
+      await TasksDAO.deleteListTasks(ObjectId(id));
       const lists = await ListsDAO.getLists();
       res.json(lists);
     } catch (e) {

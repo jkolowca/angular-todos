@@ -4,10 +4,12 @@ import { TasksService } from '../tasks.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SummaryComponent } from '../summary/summary.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-active-tasks',
   templateUrl: './active-tasks.component.html',
-  styleUrls: ['./active-tasks.component.sass']
+  styleUrls: ['./active-tasks.component.sass'],
 })
 export class ActiveTasksComponent implements OnInit {
   @ViewChild(SummaryComponent) summary: SummaryComponent;
@@ -20,12 +22,18 @@ export class ActiveTasksComponent implements OnInit {
     date: new FormControl(''),
     comment: new FormControl(''),
   });
-  constructor(private taskService: TasksService) {}
+  constructor(
+    private taskService: TasksService,
+    private route: ActivatedRoute
+  ) {}
 
   public getTasks(): void {
-    this.taskService.getTasks('active').subscribe((newTasks) => {
+    const listId =  this.route.snapshot.paramMap.get('id');
+    this.taskService.getTasks('active', listId).subscribe((newTasks) => {
       this.tasks = newTasks;
-      if (this.tasks.length === 0) { this.addTaskForm.expand(); }
+      if (this.tasks.length === 0) {
+        this.addTaskForm.expand();
+      }
     });
     console.log('List pulls tasks');
   }
@@ -69,7 +77,9 @@ export class ActiveTasksComponent implements OnInit {
     this.taskService.editTask(task).subscribe();
     this.tasks = this.tasks.filter((t) => t !== task);
     this.summary.getSummary();
-    if (this.tasks.length === 0 ) { this.addTaskForm.expand(); }
+    if (this.tasks.length === 0) {
+      this.addTaskForm.expand();
+    }
   }
 
   public cancelTaskEdit(): void {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../tasks.service';
-import { Task } from '../task';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-summary',
@@ -9,7 +9,10 @@ import { Task } from '../task';
 })
 export class SummaryComponent implements OnInit {
   finishedRatio: number;
-  constructor(private taskService: TasksService) {}
+  constructor(
+    private taskService: TasksService,
+    private route: ActivatedRoute
+  ) {}
   finished: number;
   active: number;
 
@@ -18,10 +21,11 @@ export class SummaryComponent implements OnInit {
   }
 
   public getSummary(): void {
+    const listId = this.route.snapshot.paramMap.get('id');
     this.taskService
-      .getTasksCount('finished')
+      .getTasksCount('finished', listId)
       .subscribe((c) => (this.finished = c));
-    this.taskService.getTasksCount('active').subscribe((c) => {
+    this.taskService.getTasksCount('active', listId).subscribe((c) => {
       this.active = c;
       this.calculateSummary();
     });

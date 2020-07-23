@@ -35,6 +35,27 @@ class TasksDAO {
     }
   }
 
+  static async getListTasksByState(taskState, listId) {
+    let cursor;
+    try {
+      cursor = await tasks.find({taskState, listId});
+    } catch (e) {
+      console.error(`Unable to issue find command, ${e}`);
+      return { tasksList: [] };
+    }
+
+    try {
+      const tasksList = await cursor.toArray();
+
+      return { tasksList };
+    } catch (e) {
+      console.error(
+        `Unable to convert cursor to array or problem counting documents, ${e}`
+      );
+      return { tasksList: [] };
+    }
+  }
+
   static async getTasksByState(state) {
     let cursor;
     try {
@@ -56,9 +77,9 @@ class TasksDAO {
     }
   }
 
-  static async getTasksCount(state) {
+  static async getListTasksCount(taskState, listId) {
     try {
-      return await tasks.countDocuments({taskState: state});
+      return await tasks.countDocuments({taskState, listId});
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return 0;
@@ -75,9 +96,9 @@ class TasksDAO {
     }
   }
 
-  static async addTask( name, date, comment, taskState) {
+  static async addTask( listId, name, date, comment, taskState) {
     try {
-      const taskDoc = { name, date, comment, taskState };
+      const taskDoc = { listId, name, date, comment, taskState };
 
       return await tasks.insertOne(taskDoc);
     } catch (e) {
@@ -105,6 +126,20 @@ class TasksDAO {
     try {
       const deleteResponse = await tasks.deleteOne({
         _id: taskId,
+      });
+
+      return deleteResponse;
+    } catch (e) {
+      console.error(`Unable to delete task: ${e}`);
+      return { error: e };
+    }
+  }
+
+  static async deleteListTasks(listId) {
+
+    try {
+      const deleteResponse = await tasks.deleteMany({
+        listId
       });
 
       return deleteResponse;

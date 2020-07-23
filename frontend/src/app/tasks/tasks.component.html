@@ -1,0 +1,34 @@
+<body class="mat-app-background">
+  <div class="container">
+    <div class class="main-container">
+      <div class="header">
+        <div class="date">
+          <div class="day">{{ date | date: "d" }}</div>
+          <div>
+            <div>{{ date | date: "MMMM" }}</div>
+            <div>{{ date | date: "y" }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="list-box">
+        <mat-tab-group headerPosition="below">
+          <mat-tab label="Active">
+            <ng-template matTabContent>
+              <app-active-tasks></app-active-tasks>
+            </ng-template>
+          </mat-tab>
+          <mat-tab label="Finished">
+            <ng-template matTabContent>
+              <app-other-tasks type="finished"></app-other-tasks>
+            </ng-template>
+          </mat-tab>
+          <mat-tab label="Cancelled">
+            <ng-template matTabContent>
+              <app-other-tasks type="canceled"></app-other-tasks>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</body>
