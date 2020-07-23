@@ -11,13 +11,17 @@ import { List } from '../list';
 export class TasksComponent implements OnInit {
   title = 'to-do';
   date = new Date();
-  list: List;
+  list: List = { _id: '', name: '' };
   constructor(
     private listService: ListsService,
     private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
     const listId = this.route.snapshot.paramMap.get('id');
-    this.listService.getList(listId).subscribe((l) => (this.list = l));
+    this.listService.getList(listId).subscribe((l) => {
+      if (l) {
+        this.list = l;
+      }
+    });
   }
 }
