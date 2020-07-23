@@ -3,10 +3,10 @@
     <div class class="main-container">
       <div class="header">
         <div class="date">
-          <div class="day">30</div>
+          <div class="day">{{ date | date: "d" }}</div>
           <div>
-            <div>month</div>
-            <div>2020</div>
+            <div>{{ date | date: "MMMM" }}</div>
+            <div>{{ date | date: "y" }}</div>
           </div>
         </div>
       </div>
@@ -17,7 +17,7 @@
               <app-list></app-list>
             </ng-template>
           </mat-tab>
-          <mat-tab label="Finished" >
+          <mat-tab label="Finished">
             <ng-template matTabContent>
               <app-history type="finished"></app-history>
             </ng-template>

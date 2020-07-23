@@ -24,7 +24,7 @@ export class SummaryComponent implements OnInit {
     const all = tasks.length;
     let finished = 0;
     tasks.forEach((t) => {
-      if (t.taskState === 'finished') {
+      if (t.task_state === 'finished') {
         finished++;
       }
     });
