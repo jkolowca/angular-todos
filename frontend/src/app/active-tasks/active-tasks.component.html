@@ -1,5 +1,5 @@
-<app-summary></app-summary>
-<app-add-task (taskAdded)='onNewTask($event)'></app-add-task>
+<app-summary [listId]="listId"></app-summary>
+<app-add-task [listId]="listId" (taskAdded)='onNewTask($event)'></app-add-task>
 <br />
 <mat-accordion>
   <mat-expansion-panel hideToggle

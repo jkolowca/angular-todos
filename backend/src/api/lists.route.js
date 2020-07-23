@@ -10,5 +10,6 @@ router
 router
   .route("/list/:id")
   .delete(ListsCtrl.apiDeleteList)
+  .get(ListsCtrl.apiGetList)
 
 module.exports = router;

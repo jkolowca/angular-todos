@@ -8,6 +8,12 @@ class ListsController {
     res.json(listsList);
   }
 
+  static async apiGetList(req, res, next) {
+    let id = req.params.id || {};
+    const list = await ListsDAO.getList(ObjectId(id));
+    res.json(list);
+  }
+
   static async apiAddList(req, res, next) {
     try {
       const { name } = req.body;

@@ -35,6 +35,16 @@ class ListsDAO {
     }
   }
 
+  static async getList(id) {
+    try {
+      console.log(id);
+      return await lists.findOne({ _id: id});
+    } catch (e) {
+      console.error(`Something went wrong in getTaskByID: ${e}`);
+      throw e;
+    }
+  }
+
   static async addList(name) {
     try {
       const listDoc = { name };

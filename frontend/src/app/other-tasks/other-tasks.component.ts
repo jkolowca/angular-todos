@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Task } from '../task';
 import { TasksService } from '../tasks.service';
 import { SummaryComponent } from '../summary/summary.component';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-other-tasks',
@@ -12,16 +11,15 @@ import { ActivatedRoute } from '@angular/router';
 export class OtherTasksComponent implements OnInit {
   tasks: Task[];
   @Input() type: string;
+  @Input() listId: string;
   @ViewChild(SummaryComponent) summary: SummaryComponent;
 
   constructor(
-    private taskService: TasksService,
-    private route: ActivatedRoute
+    private taskService: TasksService
   ) {}
   public getTasks(): void {
-    const listId = this.route.snapshot.paramMap.get('id');
     this.taskService
-      .getTasks(this.type, listId)
+      .getTasks(this.type, this.listId)
       .subscribe((newTasks) => (this.tasks = newTasks));
   }
 

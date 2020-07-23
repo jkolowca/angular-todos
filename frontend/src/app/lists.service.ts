@@ -20,6 +20,12 @@ export class ListsService {
       .pipe(catchError(this.handleError<List[]>('getLists', [])));
   }
 
+  getList(id: string): Observable<List> {
+    return this.http
+      .get<List>(`${this.listsUrl}list/${id}`, this.httpOptions)
+      .pipe(catchError(this.handleError<List>('getList')));
+  }
+
   addList(name: string): Observable<any> {
     return this.http.post<List>(this.listsUrl, { name }, this.httpOptions).pipe(
       tap((newList: List) => console.log(`added list id=${newList._id}`)),
