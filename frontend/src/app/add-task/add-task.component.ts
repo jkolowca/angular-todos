@@ -9,7 +9,7 @@ import {
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { TasksService } from '../tasks.service';
 import { Task } from '../task';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-task',
@@ -20,9 +20,8 @@ export class AddTaskComponent implements OnInit {
   @Output() taskAdded: EventEmitter<Task> = new EventEmitter();
   @ViewChild(MatExpansionPanel, { static: true })
   matExpansionPanelElement: MatExpansionPanel;
-  formError = false;
   newTaskForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', [Validators.required, Validators.max(35)]),
     date: new FormControl(new Date()),
     comment: new FormControl(''),
   });
@@ -34,12 +33,6 @@ export class AddTaskComponent implements OnInit {
   ngOnInit(): void {}
 
   addTask(): void {
-    if (!this.newTaskForm.controls.name.value) {
-      this.formError = true;
-      return;
-    } else {
-      this.formError = false;
-    }
     this.taskService
       .addTask(
         this.listId,

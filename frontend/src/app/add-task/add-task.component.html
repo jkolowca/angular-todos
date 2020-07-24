@@ -6,8 +6,7 @@
   </mat-expansion-panel-header>
   <form [formGroup]="newTaskForm" (ngSubmit)="addTask()">
   <mat-form-field appearance="legacy">
-    <mat-label *ngIf="!formError">Title</mat-label>
-    <mat-label *ngIf="formError">Please name Your task!</mat-label>
+    <mat-label>Title</mat-label>
     <input matInput type="text" formControlName="name" />
   </mat-form-field>
   <br />
@@ -26,12 +25,14 @@
     <button
       mat-icon-button type="submit"
       aria-label="Add task button"
+      [disabled]="!newTaskForm.valid"
     >
       <mat-icon>check</mat-icon>
     </button>
     <button
       mat-icon-button
       aria-label="Cancel task button"
+      type="button"
       (click)="clearForm()"
     >
       <mat-icon>clear</mat-icon>

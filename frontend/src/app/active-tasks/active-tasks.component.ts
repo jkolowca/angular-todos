@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Task } from '../task';
 import { TasksService } from '../tasks.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SummaryComponent } from '../summary/summary.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { ActivatedRoute } from '@angular/router';
@@ -16,9 +16,8 @@ export class ActiveTasksComponent implements OnInit {
   @ViewChild(AddTaskComponent) addTaskForm: AddTaskComponent;
   tasks: Task[];
   editedTask: Task;
-  formError = false;
   taskEditForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', [Validators.required, Validators.maxLength(35)]),
     date: new FormControl(''),
     comment: new FormControl(''),
   });

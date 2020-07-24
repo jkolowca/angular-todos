@@ -61,8 +61,7 @@
     <ng-template #editWindowBody>
       <form [formGroup]="taskEditForm" (ngSubmit)="saveTaskEdit()">
         <mat-form-field appearance="legacy">
-          <mat-label *ngIf="!formError">Title</mat-label>
-          <mat-label *ngIf="formError">Please name Your task!</mat-label>
+          <mat-label>Title</mat-label>
           <input matInput type="text" formControlName="name" />
         </mat-form-field>
         <mat-form-field appearance="legacy">
@@ -81,13 +80,14 @@
         <div class="button-container">
           <button
             type="submit"
-            [disabled]="!taskEditForm.valid"
+            [disabled]="!taskEditForm.valid || !taskEditForm.dirty"
             mat-icon-button
             aria-label="Add task button"
           >
             <mat-icon>check</mat-icon>
           </button>
           <button
+          type="button"
             mat-icon-button
             aria-label="Cancel task button"
             (click)="cancelTaskEdit()"
