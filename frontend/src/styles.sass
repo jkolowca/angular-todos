@@ -4,7 +4,12 @@
 $light-app-primary: mat-palette($mat-teal)
 $light-app-accent:  mat-palette($mat-blue-grey)
 $light-app-warn:    mat-palette($mat-pink, 700)
-$light-app-theme: mat-light-theme( $light-app-primary, $light-app-accent, $light-app-warn )
+$light-no-bg-app-theme: mat-light-theme( $light-app-primary, $light-app-accent, $light-app-warn )
+
+$custom-background-color: map_get($mat-blue-grey, 50)
+$background: map-get($light-no-bg-app-theme, background)
+$background: map_merge($background, (background: $custom-background-color))
+$light-app-theme: map_merge($light-no-bg-app-theme, (background: $background))
 
 $dark-app-primary: mat-palette($mat-teal)
 $dark-app-accent:  mat-palette($mat-blue-grey)
@@ -55,17 +60,22 @@ body
   margin-bottom: 20px
   flex-grow: 20
   display: flex
+
 .mat-tab-group
   flex-grow: 1
+
 .mat-tab-labels
   justify-content: space-evenly
+
   .mat-tab-label
     min-width: 32%
+
 .mat-tab-body-wrapper
   flex-grow: 1
 
 .mat-tab-body-content
   overflow-y: hidden !important
+
 .mat-form-field
   width: 90%
   margin: 0 5%
@@ -74,17 +84,21 @@ body
   display: flex
   justify-content: flex-end
   padding: 0 10px
+
   .button
     margin: 0 10px
 
 .mat-content
   align-items: center
+
 .mat-expansion-panel-header
   padding: 0 15px 0 30px!important
+
 .mat-expansion-panel-header-description
   flex-flow: row
   justify-content: flex-end
   margin-right: 0px!important
+
   .mat-icon
     font-size: 17px
 
