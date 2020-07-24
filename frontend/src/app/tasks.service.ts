@@ -29,7 +29,7 @@ export class TasksService {
     return this.http
       .post<Task>(
         this.tasksUrl,
-        { listId, name, date, comment, task_state: 'active' },
+        { listId, name, date, comment, taskState: 'active' },
         this.httpOptions
       )
       .pipe(

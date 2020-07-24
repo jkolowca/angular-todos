@@ -14,13 +14,17 @@ export class OtherTasksComponent implements OnInit {
   @Input() listId: string;
   @ViewChild(SummaryComponent) summary: SummaryComponent;
 
-  constructor(
-    private taskService: TasksService
-  ) {}
+  constructor(private taskService: TasksService) {}
   public getTasks(): void {
-    this.taskService
-      .getTasks(this.type, this.listId)
-      .subscribe((newTasks) => (this.tasks = newTasks));
+    this.taskService.getTasks(this.type, this.listId).subscribe(
+      (newTasks) =>
+        (this.tasks = newTasks.sort((a, b) => {
+          return (
+            new Date(b.date.toString()).getTime() -
+            new Date(a.date.toString()).getTime()
+          );
+        }))
+    );
   }
 
   ngOnInit(): void {
@@ -32,7 +36,7 @@ export class OtherTasksComponent implements OnInit {
   }
 
   public setTaskState(task: Task, state: string): void {
-    task.task_state = state;
+    task.taskState = state;
     this.taskService.editTask(task).subscribe();
     this.tasks = this.tasks.filter((t) => t !== task);
     this.summary.getSummary();

@@ -9,9 +9,9 @@ class TasksController {
 
   static async apiAddTask(req, res, next) {
     try {
-      const { listId, name, date, comment, task_state } = req.body;
+      const { listId, name, date, comment, taskState } = req.body;
 
-      await TasksDAO.addTask( ObjectId(listId), name, date, comment, task_state);
+      await TasksDAO.addTask( ObjectId(listId), name, date, comment, taskState);
 
       const updatedTasks = await TasksDAO.getTasks();
 
@@ -60,14 +60,14 @@ class TasksController {
   static async apiUpdateTask(req, res, next) {
     try {
       let id = req.params.id || {};
-      const { name, date, comment, task_state } = req.body;
+      const { name, date, comment, taskState } = req.body;
 
       const taskResponse = await TasksDAO.updateTask(
         ObjectId(id),
         name,
         date,
         comment,
-        task_state
+        taskState
       );
 
       var { error } = taskResponse;

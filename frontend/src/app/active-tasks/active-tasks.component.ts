@@ -30,7 +30,9 @@ export class ActiveTasksComponent implements OnInit {
 
   public getTasks(): void {
     this.taskService.getTasks('active', this.listId).subscribe((newTasks) => {
-      this.tasks = newTasks;
+      this.tasks = newTasks.sort((a, b) => {
+        return new Date(a.date.toString()).getTime() - new Date(b.date.toString()).getTime();
+      });
       if (this.tasks.length === 0) {
         this.addTaskForm.expand();
       }
@@ -74,7 +76,7 @@ export class ActiveTasksComponent implements OnInit {
   }
 
   public setTaskState(task: Task, state: string): void {
-    task.task_state = state;
+    task.taskState = state;
     this.taskService.editTask(task).subscribe();
     this.tasks = this.tasks.filter((t) => t !== task);
     this.summary.getSummary();

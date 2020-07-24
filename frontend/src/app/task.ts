@@ -4,5 +4,5 @@ export class Task {
   public 'name': string;
   public 'date': Date;
   public 'comment': string;
-  public 'task_state': string;
+  public 'taskState': string;
 }
