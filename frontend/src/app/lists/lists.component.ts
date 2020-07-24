@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { List } from '../list';
 import { ListsService } from '../lists.service';
 
@@ -8,7 +8,6 @@ import { ListsService } from '../lists.service';
   styleUrls: ['./lists.component.sass'],
 })
 export class ListsComponent implements OnInit {
-  title = 'to-do';
   date = new Date();
   lists: List[];
   constructor(private listService: ListsService) {}

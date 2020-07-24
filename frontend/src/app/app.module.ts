@@ -16,6 +16,7 @@ import { OtherTasksComponent } from './other-tasks/other-tasks.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { ListsComponent } from './lists/lists.component';
 import { AddListComponent } from './add-list/add-list.component';
+
 @NgModule({
   declarations: [
     AppComponent,

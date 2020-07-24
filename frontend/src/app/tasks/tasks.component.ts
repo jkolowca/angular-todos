@@ -9,7 +9,6 @@ import { List } from '../list';
   styleUrls: ['./tasks.component.sass'],
 })
 export class TasksComponent implements OnInit {
-  title = 'to-do';
   date = new Date();
   list: List = { _id: 'a', name: '' };
   constructor(
