@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'to-do';
+  otherTheme = false;
   constructor() {}
+  switchTheme(): void {
+    this.otherTheme = !this.otherTheme;
+  }
 }

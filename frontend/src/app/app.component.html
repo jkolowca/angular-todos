@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<div style="height: 100%;" [class.alternative]="otherTheme">
+<router-outlet ></router-outlet>
+<button
+  class="theme-button"
+  mat-icon-button
+  aria-label="Edit task button"
+  (click)="switchTheme()"
+  color="primary"
+>
+  <mat-icon>invert_colors</mat-icon>
+</button>
+</div>

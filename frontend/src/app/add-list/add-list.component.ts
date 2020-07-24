@@ -20,7 +20,7 @@ export class AddListComponent implements OnInit {
   @ViewChild(MatExpansionPanel, { static: true })
   matExpansionPanelElement: MatExpansionPanel;
   newListForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+    name: new FormControl('', [Validators.required, Validators.maxLength(15)]),
   });
   constructor(private listService: ListsService) {}
 

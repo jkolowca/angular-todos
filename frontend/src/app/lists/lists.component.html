@@ -13,10 +13,14 @@
       <div class="list-box">
         <div class="list-list-box">
           <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
-          <app-add-list (listAdded)='onNewList($event)'></app-add-list>
+          <app-add-list (listAdded)="onNewList($event)"></app-add-list>
           <br />
           <mat-accordion>
-            <mat-expansion-panel hideToggle *ngFor="let list of lists" routerLink="/{{list._id}}">
+            <mat-expansion-panel
+              hideToggle
+              *ngFor="let list of lists"
+              routerLink="/{{ list._id }}"
+            >
               <mat-expansion-panel-header>
                 <mat-panel-title>{{ list.name }}</mat-panel-title>
                 <mat-panel-description>
