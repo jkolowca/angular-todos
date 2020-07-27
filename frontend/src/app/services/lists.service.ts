@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { List } from './list';
+import { List } from '../interfaces/list';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
@@ -12,6 +12,7 @@ export class ListsService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
+
   constructor(private http: HttpClient) {}
 
   getLists(): Observable<List[]> {
@@ -40,13 +41,10 @@ export class ListsService {
       .pipe(catchError(this.handleError<List>('deleteList')));
   }
 
-  private handleError<T>(
-    operation = 'operation',
-    result?: T
-  ): (a: any) => Observable<T> {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      return of(result as T);
-    };
-  }
+  private handleError<T>( operation?: string, result?: T): (a: any) => Observable<T> {
+   return (error: any): Observable<T> => {
+     console.error(`${error} at: ${operation}`);
+     return of(result as T);
+   };
+ }
 }

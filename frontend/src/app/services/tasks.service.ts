@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from './task';
+import { Task } from '../interfaces/task';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
@@ -12,6 +12,7 @@ export class TasksService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
+
   constructor(private http: HttpClient) {}
 
   getTasks(type: string, listId: string): Observable<Task[]> {
@@ -25,11 +26,11 @@ export class TasksService {
       .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
   }
 
-  addTask(listId: string, name: string, date: Date, comment: string): Observable<any> {
+  addTask(listId: string, t: { name: string, date: Date, comment: string }): Observable<any> {
     return this.http
       .post<Task>(
         this.tasksUrl,
-        { listId, name, date, comment, taskState: 'active' },
+        { listId, name: t.name, date: t.date, comment: t.comment, taskState: 'active' },
         this.httpOptions
       )
       .pipe(
@@ -57,12 +58,9 @@ export class TasksService {
       .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
   }
 
-  private handleError<T>(
-    operation = 'operation',
-    result?: T
-  ): (a: any) => Observable<T> {
+  private handleError<T>( operation?: string, result?: T): (a: any) => Observable<T> {
     return (error: any): Observable<T> => {
-      console.error(error);
+      console.error(`${error} at: ${operation}`);
       return of(result as T);
     };
   }

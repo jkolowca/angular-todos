@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ListsService } from '../lists.service';
-import { List } from '../list';
-import { Location } from '@angular/common'
+import { ListsService } from '../services/lists.service';
+import { List } from '../interfaces/list';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.sass'],
+  styleUrls: ['./tasks.component.scss'],
 })
+
 export class TasksComponent implements OnInit {
   date = new Date();
   list: List = { _id: 'a', name: '' };
+
   constructor(
     private location: Location,
     private listService: ListsService,

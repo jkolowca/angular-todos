@@ -1,31 +1,32 @@
 <mat-expansion-panel hideToggle #matExpansionPanel>
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      Add new list
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  <form [formGroup]="newListForm" (ngSubmit)="addList()">
-  <mat-form-field appearance="legacy">
-    <mat-label>Title</mat-label>
-    <input matInput type="text" formControlName="name" />
-  </mat-form-field>
-  <br />
-  <div class="button-container">
-    <button
-      mat-icon-button type="submit"
-      aria-label="Add task button"
-      [disabled]="!newListForm.valid"
-    >
-      <mat-icon>check</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      aria-label="Cancel task button"
-      type="reset"
-      (click)="clearForm()"
-    >
-      <mat-icon>clear</mat-icon>
-    </button>
-  </div>
-</form>
+   <mat-expansion-panel-header>
+      <mat-panel-title>
+         Add new list
+      </mat-panel-title>
+   </mat-expansion-panel-header>
+   <form [formGroup]="newListForm" (ngSubmit)="addList()">
+      <mat-form-field appearance="legacy">
+         <mat-label>Title</mat-label>
+         <input matInput type="text" formControlName="name" />
+      </mat-form-field>
+      <br />
+      <div class="button-container">
+         <button
+            mat-icon-button
+            type="submit"
+            aria-label="Add task button"
+            [disabled]="!newListForm.valid"
+         >
+            <mat-icon>check</mat-icon>
+         </button>
+         <button
+            mat-icon-button
+            aria-label="Cancel task button"
+            type="reset"
+            (click)="clearForm()"
+         >
+            <mat-icon>clear</mat-icon>
+         </button>
+      </div>
+   </form>
 </mat-expansion-panel>

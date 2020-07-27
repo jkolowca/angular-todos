@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Task } from '../task';
-import { TasksService } from '../tasks.service';
+import { Task } from '../interfaces/task';
+import { TasksService } from '../services/tasks.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SummaryComponent } from '../summary/summary.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
@@ -8,20 +8,23 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-active-tasks',
-  templateUrl: './active-tasks.component.html',
-  styleUrls: ['./active-tasks.component.sass'],
+  templateUrl: './active-tasks.component.html'
 })
+
 export class ActiveTasksComponent implements OnInit {
   @ViewChild(SummaryComponent) summary: SummaryComponent;
   @ViewChild(AddTaskComponent) addTaskForm: AddTaskComponent;
+
   tasks: Task[];
   editedTask: Task;
+  listId: string;
+
   taskEditForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(35)]),
     date: new FormControl(''),
     comment: new FormControl(''),
   });
-  listId: string;
+
   constructor(
     private taskService: TasksService,
     private route: ActivatedRoute

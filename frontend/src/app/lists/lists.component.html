@@ -1,42 +1,45 @@
 <body class="mat-app-background">
-  <div class="container">
-    <div class class="main-container">
-      <div class="header">
-        <div class="date">
-          <div class="day">{{ date | date: "d" }}</div>
-          <div>
-            <div>{{ date | date: "MMMM" }}</div>
-            <div>{{ date | date: "y" }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="list-box">
-        <div class="list-list-box">
-          <mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
-          <app-add-list (listAdded)="onNewList($event)"></app-add-list>
-          <br />
-          <mat-accordion>
-            <mat-expansion-panel
-              hideToggle
-              *ngFor="let list of lists"
-              routerLink="/{{ list._id }}"
-            >
-              <mat-expansion-panel-header>
-                <mat-panel-title>{{ list.name }}</mat-panel-title>
-                <mat-panel-description>
-                  <button
-                    mat-icon-button
-                    aria-label="Delete task button"
-                    (click)="deleteTask(list._id)"
+   <div class="container">
+      <div class class="main-container">
+         <div class="header">
+            <div class="date">
+               <div class="day">{{ date | date: "d" }}</div>
+               <div>
+                  <div>{{ date | date: "MMMM" }}</div>
+                  <div>{{ date | date: "y" }}</div>
+               </div>
+            </div>
+         </div>
+         <div class="list-box">
+            <div class="list-list-box">
+               <mat-progress-bar
+                  mode="determinate"
+                  value="100"
+               ></mat-progress-bar>
+               <app-add-list (listAdded)="getLists()"></app-add-list>
+               <br />
+               <mat-accordion>
+                  <mat-expansion-panel
+                     hideToggle
+                     *ngFor="let list of lists"
+                     routerLink="/{{ list._id }}"
                   >
-                    <mat-icon>clear</mat-icon>
-                  </button>
-                </mat-panel-description>
-              </mat-expansion-panel-header>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </div>
+                     <mat-expansion-panel-header>
+                        <mat-panel-title>{{ list.name }}</mat-panel-title>
+                        <mat-panel-description>
+                           <button
+                              mat-icon-button
+                              aria-label="Delete task button"
+                              (click)="deleteList(list._id)"
+                           >
+                              <mat-icon>clear</mat-icon>
+                           </button>
+                        </mat-panel-description>
+                     </mat-expansion-panel-header>
+                  </mat-expansion-panel>
+               </mat-accordion>
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
 </body>
