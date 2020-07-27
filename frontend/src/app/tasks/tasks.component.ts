@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ListsService } from '../lists.service';
 import { List } from '../list';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-tasks',
@@ -12,10 +13,12 @@ export class TasksComponent implements OnInit {
   date = new Date();
   list: List = { _id: 'a', name: '' };
   constructor(
+    private location: Location,
     private listService: ListsService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
+
   ngOnInit(): void {
     const listId = this.route.snapshot.paramMap.get('id');
     this.listService.getList(listId).subscribe((l) => {
@@ -24,5 +27,9 @@ export class TasksComponent implements OnInit {
       }
       this.list = l;
     });
+  }
+
+  goHome(): void {
+    this.location.back();
   }
 }
