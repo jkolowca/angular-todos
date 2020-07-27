@@ -18,6 +18,7 @@ export class OtherTasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTasks();
+    this.summary.getSummary();
   }
 
   public getTasks(): void {

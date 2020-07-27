@@ -51,6 +51,7 @@ export class ActiveTasksComponent implements OnInit {
   ngOnInit(): void {
     this.listId = this.route.snapshot.paramMap.get('id');
     this.getTasks();
+    this.summary.getSummary()
   }
 
   formatDate(task: Task): string {
