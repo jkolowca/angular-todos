@@ -1,5 +1,5 @@
-const TasksDAO = require("../dao/tasksDAO");
-const ObjectId = require("mongodb").ObjectId;
+import TasksDAO from "../dao/tasksDAO";
+import { ObjectId, UpdateWriteOpResult } from "mongodb";
 
 class TasksController {
   static async apiGetTasks(req, res, next) {
@@ -11,7 +11,7 @@ class TasksController {
     try {
       const { listId, name, date, comment, taskState } = req.body;
 
-      await TasksDAO.addTask( ObjectId(listId), name, date, comment, taskState);
+      await TasksDAO.addTask( new ObjectId(listId), name, date, comment, taskState);
 
       const updatedTasks = await TasksDAO.getTasks();
 
@@ -24,7 +24,7 @@ class TasksController {
   static async apiGetListTasksByState(req, res, next) {
     let state = req.params.state || {};
     let listId = req.params.id || {};
-    const { tasksList } = await TasksDAO.getListTasksByState(state, ObjectId(listId));
+    const { tasksList } = await TasksDAO.getListTasksByState(state, new ObjectId(listId));
     res.json(tasksList);
   }
 
@@ -37,14 +37,14 @@ class TasksController {
   static async apiGetListTasksCount(req, res, next) {
     let state = req.params.state || {};
     let listId = req.params.id || {};
-    const count = await TasksDAO.getListTasksCount(state, ObjectId(listId));
+    const count = await TasksDAO.getListTasksCount(state, new ObjectId(listId));
     res.json(count);
   }
-  
+
   static async apiGetTaskById(req, res, next) {
     try {
       let id = req.params.id || {};
-      let task = await TasksDAO.getTaskByID(ObjectId(id));
+      let task = await TasksDAO.getTaskByID(new ObjectId(id));
       if (!task) {
         res.status(404).json({ error: "Not found" });
         return;
@@ -63,19 +63,18 @@ class TasksController {
       const { name, date, comment, taskState } = req.body;
 
       const taskResponse = await TasksDAO.updateTask(
-        ObjectId(id),
+        new ObjectId(id),
         name,
         date,
         comment,
         taskState
       );
 
-      var { error } = taskResponse;
-      if (error) {
-        res.status(400).json({ error });
+      if (taskResponse["error"]) {
+        res.status(400).json({ error: taskResponse["error"] });
       }
 
-      if (taskResponse.modifiedCount === 0) {
+      if ((taskResponse as UpdateWriteOpResult).modifiedCount === 0) {
         throw new Error("unable to update task");
       }
 
@@ -90,7 +89,7 @@ class TasksController {
   static async apiDeleteTask(req, res, next) {
     try {
       let id = req.params.id || {};
-      await TasksDAO.deleteTask(ObjectId(id));
+      await TasksDAO.deleteTask(new ObjectId(id));
 
       const tasks = await TasksDAO.getTasks();
       res.json(tasks);
@@ -100,4 +99,4 @@ class TasksController {
   }
 }
 
-module.exports = TasksController;
+export default TasksController;

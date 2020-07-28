@@ -1,7 +1,7 @@
-const Router = require("express").Router;
-const ListsCtrl = require("./lists.controller");
+import { Router } from 'express';
+import ListsCtrl from './lists.controller';
 
-const router = new Router();
+const router = Router();
 
 router
   .route("/")
@@ -12,4 +12,4 @@ router
   .delete(ListsCtrl.apiDeleteList)
   .get(ListsCtrl.apiGetList)
 
-module.exports = router;
+export default router;

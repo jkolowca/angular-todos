@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+const tasks_route_1 = require("../src/api/tasks.route");
+const lists_route_1 = require("../src/api/lists.route");
+exports.app = express();
+exports.app.use(cors());
+exports.app.use(morgan("dev"));
+exports.app.use(express.json());
+exports.app.use(express.urlencoded({ extended: true }));
+// Register api routes
+exports.app.use("/api/tasks", tasks_route_1.default);
+exports.app.use("/api/lists", lists_route_1.default);
+exports.app.use("/status", express.static("build"));
+exports.app.use("/", express.static("build"));
+exports.app.use("*", (req, res) => res.status(404).json({ error: "not found" }));
+module.exports = exports.app;

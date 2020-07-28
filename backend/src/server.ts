@@ -1,15 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const tasks = require('../src/api/tasks.route');
-const lists = require('../src/api/lists.route');
+import express = require('express');
+import cors = require('cors');
+import morgan = require('morgan');
+import tasks from '../src/api/tasks.route';
+import lists from '../src/api/lists.route';
 
-const app = express();
+export const app = express();
 
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // Register api routes
 app.use("/api/tasks", tasks);

@@ -1,7 +1,7 @@
-const Router = require("express").Router;
-const TasksCtrl = require("./tasks.controller");
+import {Router} from 'express';
+import TasksCtrl from './tasks.controller';
 
-const router = new Router();
+const router = Router();
 
 router
   .route("/")
@@ -22,4 +22,4 @@ router
   .put(TasksCtrl.apiUpdateTask)
   .delete(TasksCtrl.apiDeleteTask);
 
-module.exports = router;
+  export default router;

@@ -1,6 +1,6 @@
-const ListsDAO = require("../dao/listsDAO");
-const TasksDAO = require("../dao/tasksDAO");
-const ObjectId = require("mongodb").ObjectId;
+import ListsDAO from '../dao/listsDAO';
+import TasksDAO from '../dao/tasksDAO';
+import {ObjectId} from 'mongodb';
 
 class ListsController {
   static async apiGetLists(req, res, next) {
@@ -11,7 +11,7 @@ class ListsController {
   static async apiGetList(req, res, next) {
     let id = req.params.id || {};
     try {
-      const list = await ListsDAO.getList(ObjectId(id));
+      const list = await ListsDAO.getList(new ObjectId(id));
       res.json(list);
     } catch (e) {
       res.status(500).json({e});
@@ -35,8 +35,8 @@ class ListsController {
   static async apiDeleteList(req, res, next) {
     try {
       let id = req.params.id || {};
-      await ListsDAO.deleteList(ObjectId(id));
-      await TasksDAO.deleteListTasks(ObjectId(id));
+      await ListsDAO.deleteList(new ObjectId(id));
+      await TasksDAO.deleteListTasks(new ObjectId(id));
       const lists = await ListsDAO.getLists();
       res.json(lists);
     } catch (e) {
@@ -45,4 +45,4 @@ class ListsController {
   }
 }
 
-module.exports = ListsController;
+export default ListsController;

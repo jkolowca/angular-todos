@@ -1,7 +1,8 @@
-let tasks;
+import { MongoClient, Collection, Cursor, ObjectId } from 'mongodb';
+let tasks: Collection<any>;
 
 class TasksDAO {
-  static async injectDB(conn) {
+  static async injectDB(conn: MongoClient) {
     if (tasks) {
       return;
     }
@@ -15,7 +16,7 @@ class TasksDAO {
   }
 
   static async getTasks() {
-    let cursor;
+    let cursor: Cursor;
     try {
       cursor = await tasks.find();
     } catch (e) {
@@ -36,7 +37,7 @@ class TasksDAO {
   }
 
   static async getListTasksByState(taskState, listId) {
-    let cursor;
+    let cursor: Cursor;
     try {
       cursor = await tasks.find({taskState, listId});
     } catch (e) {
@@ -57,7 +58,7 @@ class TasksDAO {
   }
 
   static async getTasksByState(state) {
-    let cursor;
+    let cursor: Cursor;
     try {
       cursor = await tasks.find({taskState: state});
     } catch (e) {
@@ -86,7 +87,7 @@ class TasksDAO {
     }
   }
 
-  static async getTaskByID(id) {
+  static async getTaskByID(id: ObjectId) {
     try {
       console.log(id);
       return await tasks.findOne({ _id: id});
@@ -96,7 +97,7 @@ class TasksDAO {
     }
   }
 
-  static async addTask( listId, name, date, comment, taskState) {
+  static async addTask( listId: ObjectId, name: string, date: Date, comment: string, taskState: string) {
     try {
       const taskDoc = { listId, name, date, comment, taskState };
 
@@ -107,7 +108,7 @@ class TasksDAO {
     }
   }
 
-  static async updateTask(taskId, name, date, comment, taskState) {
+  static async updateTask(taskId: ObjectId, name: string, date: Date, comment: string, taskState: string) {
     try {
       const updateResponse = await tasks.updateOne(
         { _id: taskId },
@@ -121,7 +122,7 @@ class TasksDAO {
     }
   }
 
-  static async deleteTask(taskId) {
+  static async deleteTask(taskId: ObjectId) {
 
     try {
       const deleteResponse = await tasks.deleteOne({
@@ -135,7 +136,7 @@ class TasksDAO {
     }
   }
 
-  static async deleteListTasks(listId) {
+  static async deleteListTasks(listId: ObjectId) {
 
     try {
       const deleteResponse = await tasks.deleteMany({
@@ -160,4 +161,4 @@ class TasksDAO {
  * @property {string} taskState
  */
 
-module.exports = TasksDAO;
+export default TasksDAO;
