@@ -5,13 +5,17 @@ import { TasksService } from '../services/tasks.service';
    selector: 'app-summary',
    templateUrl: './summary.component.html',
 })
-export class SummaryComponent {
+export class SummaryComponent implements OnInit {
    @Input() listId: string;
    finishedRatio: number;
    finished: number;
    active: number;
 
    constructor(private taskService: TasksService) {}
+
+   ngOnInit(): void {
+      this.getSummary();
+   }
 
    getSummary(): void {
       this.taskService

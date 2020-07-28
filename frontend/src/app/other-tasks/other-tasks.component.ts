@@ -5,20 +5,18 @@ import { SummaryComponent } from '../summary/summary.component';
 
 @Component({
   selector: 'app-other-tasks',
-  templateUrl: './other-tasks.component.html',
-  styleUrls: ['./other-tasks.component.sass'],
+  templateUrl: './other-tasks.component.html'
 })
 export class OtherTasksComponent implements OnInit {
+  @ViewChild(SummaryComponent) summary: SummaryComponent;
   @Input() type: string;
   @Input() listId: string;
-  @ViewChild(SummaryComponent) summary: SummaryComponent;
   tasks: Task[];
 
   constructor(private taskService: TasksService) {}
 
   ngOnInit(): void {
-    this.getTasks();
-    this.summary.getSummary();
+     this.getTasks();
   }
 
   public getTasks(): void {
@@ -31,10 +29,6 @@ export class OtherTasksComponent implements OnInit {
           );
         }))
     );
-  }
-
-  formatDate(task: Task): string {
-    return new Date(task.date).toLocaleDateString('en-US');
   }
 
   public setTaskState(task: Task, state: string): void {

@@ -7,14 +7,14 @@
             <button
                mat-icon-button
                aria-label="Finish task button"
-               (click)="setTaskState(task, 'active'); summary.getSummary()"
+               (click)="setTaskState(task, 'active')"
             >
                <mat-icon>add</mat-icon>
             </button>
             <button
                mat-icon-button
                aria-label="Delete task button"
-               (click)="deleteTask(task._id); summary.getSummary()"
+               (click)="deleteTask(task._id)"
             >
                <mat-icon>clear</mat-icon>
             </button>

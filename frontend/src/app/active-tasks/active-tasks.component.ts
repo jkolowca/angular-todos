@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../interfaces/task';
 import { TasksService } from '../services/tasks.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class ActiveTasksComponent implements OnInit {
-  @ViewChild(SummaryComponent) summary: SummaryComponent;
+  @ViewChild(SummaryComponent, {static: false}) summary: SummaryComponent;
   @ViewChild(AddTaskComponent) addTaskForm: AddTaskComponent;
 
   tasks: Task[];
@@ -35,11 +35,15 @@ export class ActiveTasksComponent implements OnInit {
       this.tasks = newTasks.sort((a, b) => {
         return new Date(a.date.toString()).getTime() - new Date(b.date.toString()).getTime();
       });
-      if (this.tasks.length === 0) {
+      if (!this.tasks.length) {
         this.addTaskForm.expand();
       }
     });
-    console.log('List pulls tasks');
+  }
+
+  public updateTasks(): void {
+     this.getTasks();
+     this.summary.getSummary();
   }
 
   public deleteTask(id: string): void {
@@ -51,11 +55,6 @@ export class ActiveTasksComponent implements OnInit {
   ngOnInit(): void {
     this.listId = this.route.snapshot.paramMap.get('id');
     this.getTasks();
-    this.summary.getSummary()
-  }
-
-  formatDate(task: Task): string {
-    return new Date(task.date).toLocaleDateString('en-US');
   }
 
   public editTask(task: Task): void {
@@ -90,10 +89,5 @@ export class ActiveTasksComponent implements OnInit {
 
   public cancelTaskEdit(): void {
     this.editedTask = null;
-  }
-
-  public onNewTask(task: Task): void {
-    this.getTasks();
-    this.summary.getSummary();
   }
 }
